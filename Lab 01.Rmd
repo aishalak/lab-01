@@ -1,8 +1,8 @@
 ---
 title: "Lab 01"
 author: "Aisha Lakshman"
-date: "1/17/2022"
-output: pdf_document
+date: "1/18/2022"
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -16,20 +16,32 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r cars}
-summary
+summary(cars)
 ```
-""
+
 ## Including Plots
 
-You can also embed plots, for example:.
+You can also embed plots, for example:
+
 ```{r pressure, echo=FALSE}
 plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
+```{r}
+install.packages("usethis")
+library(usethis)
+use_git_config(user.name = "aishalak", user.email = "alakshma@ucsc.edu")
 library(tidyverse)
 install.packages("tidyverse")
 trails <- read_csv("data/SFO-trails.csv")
+
+glimpse(trails)
+
+ggplot(data = trails, aes(x = status)) + geom_bar() + labs(x = "Status", y = "Number of Observations", title = "Status of SFO Trails")
+trails %>% count(status) %>% mutate(proportion = n / sum(n))
+current_trails <- trails %>% filter(status == "Existing", !is.na(length))
+ggplot(data = current_trails) + geom_histogram(mapping = aes(x = length), binwidth = 0.5) + labs(x = "Length", y = "Number of Observations", title = "Length of SFO Trails")
+```
 
 
