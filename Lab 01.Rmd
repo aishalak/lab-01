@@ -2,7 +2,9 @@
 title: "Lab 01"
 author: "Aisha Lakshman"
 date: "1/18/2022"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -29,12 +31,12 @@ plot(pressure)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 ```{r}
-install.packages("usethis")
+# install.packages("usethis")
 library(usethis)
 use_git_config(user.name = "aishalak", user.email = "alakshma@ucsc.edu")
 library(tidyverse)
-install.packages("tidyverse")
-trails <- read_csv("data/SFO-trails.csv")
+# install.packages("tidyverse")
+trails <- read_csv("SFO-trails.csv")
 
 glimpse(trails)
 
@@ -42,6 +44,6 @@ ggplot(data = trails, aes(x = status)) + geom_bar() + labs(x = "Status", y = "Nu
 trails %>% count(status) %>% mutate(proportion = n / sum(n))
 current_trails <- trails %>% filter(status == "Existing", !is.na(length))
 ggplot(data = current_trails) + geom_histogram(mapping = aes(x = length), binwidth = 0.5) + labs(x = "Length", y = "Number of Observations", title = "Length of SFO Trails")
-```
+
 
 
