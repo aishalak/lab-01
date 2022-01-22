@@ -37,13 +37,44 @@ use_git_config(user.name = "aishalak", user.email = "alakshma@ucsc.edu")
 library(tidyverse)
 # install.packages("tidyverse")
 trails <- read_csv("SFO-trails.csv")
-
 glimpse(trails)
+```
+Exercise 1: The very top of the output tells us the number of rows and columns in the dataset. The number of rows represents the number of observations and the number of columns the number of variables. Therefore, the trails dataset contains 739 observations and 12 variables.
+Exercise 2: A bar graph is most appropriate to visualize the distribution of “status” because the status data shows that trails fall under the category of “existing” or “proposed”. A bar graph allows to visualize the number of existing and proposed trails in the dataset. Now, lets calculate the proportion of observations in each category of status.
 
+```{r}
 ggplot(data = trails, aes(x = status)) + geom_bar() + labs(x = "Status", y = "Number of Observations", title = "Status of SFO Trails")
 trails %>% count(status) %>% mutate(proportion = n / sum(n))
+```
+Exercise 3: The code below creates a subset consisting only of trails that currently exist and have a value reported for length.
+```{r}
 current_trails <- trails %>% filter(status == "Existing", !is.na(length))
+```
+Exercise 4: The code below shows two ways to create a graph to visualize the distribution of length with the ggplot2 package.
+```{r}
 ggplot(data = current_trails) + geom_histogram(mapping = aes(x = length), binwidth = 0.5) + labs(x = "Length", y = "Number of Observations", title = "Length of SFO Trails")
+ggplot(data = current_trails, mapping = aes(x = as.factor(class), y = length)) + geom_boxplot() + labs(x = "Trail Class", y = "Trail Length", title = "Length of SFO Trails", subtitle = "By Class")
+```
+Exercise 5. 
+```{r}
+current_trails %>%
+    summarise(min = min(length), 
+              q1 = quantile(length, c(0.25, 0.5, 0.75)), 
+              median = median(length), 
+              q3 = quantile(length, c(0.25, 0.5, 0.75)), 
+              max = max(length), 
+              iqr = IQR(length), 
+              mean = mean(length), 
+              std_dev = sd(length))
+```
+Exercise 6. 
+The histogram for length is skewed right, meaning that mean is to the right of the median. The mean and median tells us about the center of the distribution. According to the summary statistic, the mean trail length is 0.724 miles  and the median trail length is 0.448 miles. According to the the summary statistic, the standard deviation is 0.852 miles. In the boxplot, there are many outliers in class 1 trails. 
+Exercise 7. 
+If we want to filter the data to display trails suitable for day hikes, we can use the code veiw trails that are 5 miles or shorter. 
+```{r}
+current_trails %>% filter(length <= 5, !is.na(length))
+```
+ Exercise 8. 
 
 
 
