@@ -75,6 +75,21 @@ If we want to filter the data to display trails suitable for day hikes, we can u
 current_trails %>% filter(length <= 5, !is.na(length))
 ```
  Exercise 8. 
-
-
-
+Trails are divided into three categories under class: class 1, class 2, and class 3. We can see that in the histogram, most trails fall under class 1. 
+```{r}
+ggplot(data = current_trails) +
+  geom_histogram(mapping = aes(x = class), binwidth = 0.5) + labs(x = "Class", y = "Trail Count", title = "Trail Class")
+```
+I think the most likely reason for missing observations in class is due to trail upkeep and maintenance, and logging the changes in the data. Updating trail conditions may result in a duplicate entry, and this might be why the two observations with no entry for class are very similar to the entry that follows them.  
+Exercise 9. 
+```{r}
+trail_class <- current_trails %>% filter(class !=3) %>% 
+  mutate(class = if_else(is.na(class),1,class))
+```
+Exercise 10. 
+```{r}
+ggplot(aes(x=class,y=length),data=current_trails)+
+  geom_point() + labs(x = "Trail Class", y = "Trail Length", title = "Trail Length By Class") 
+```
+Exercise 11. 
+By looking at the graph made in exercise 10, we can see that the trails with the greatest length lie in class 1. Most trails are in the class 1 category and least trails are in the class 3 category. Considering that class 1 = shared use bicycle and pedestrian path, class 2 = bike lane, and class 3 = bike route, it follows that class 3 has the shortest length because class 3 is restricted to bike route trails. 
