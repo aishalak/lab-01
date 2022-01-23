@@ -93,3 +93,21 @@ ggplot(aes(x=class,y=length),data=current_trails)+
 ```
 Exercise 11. 
 By looking at the graph made in exercise 10, we can see that the trails with the greatest length lie in class 1. Most trails are in the class 1 category and least trails are in the class 3 category. Considering that class 1 = shared use bicycle and pedestrian path, class 2 = bike lane, and class 3 = bike route, it follows that class 3 has the shortest length because class 3 is restricted to bike route trails. 
+Exercise 12. 
+```{r}
+ggplot(aes(x=class,y=length),data=trail_class)+
+  geom_point() + labs(x = "Trail Class", y = "Trail Length", title = "Trail Length By Class 1 and Class 2") 
+```
+Independence is met because class 1 and class 2 are mutually exclusive. The sample size of observations is large enough to meet the conditions of sample size. Independent groups is satisfied because class 1 and class 2 are being measured by the same the same conditions, but class 1 represents shared use bicycle and pedestrain path trails and class 2 represents bike lane trails. 
+Exercise 13. 
+The null hypothesis represents the case in which length and class no don't have a linear association. The alternative hypothesis represents the case in which length and class have a linear association, whether the association is positive or negative. 
+Exercise 14.
+# need help with exercise 14
+?t.test # to see the help page from the function
+t.test(length ~ class, data = trail_class, 
+       alternative = c("less", "greater", "two.sided"), 
+       conf.level = 0.99) #less, greater, or two.sided
+Exercise 15. 
+In the case of this problem, the test statistic determines a possible conclusion of whether length and class no don't have a linear association or if length and class have a linear association, whether the association is positive or negative.
+The p-value tells us whether we should reject or not reject our null hypothesis, and in the context of this problem, if we should or not reject the possible conclusion that length and class no don't have a linear association. 
+Note* Since I was struggling with exercise 14, I can't answer the remaining questions correctly.I will get back to the remaining exercises once I can create the correct t.test code. 
